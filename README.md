@@ -1,4 +1,7 @@
-# Projet Poker
+# Projet Poker Game
+
+## Exemple
+![home](images-readme/game.png)
 
 ## Installation
 Il faut spécifier `--recursive` au `git clone` pour installer le submodule de GoogleTests :
