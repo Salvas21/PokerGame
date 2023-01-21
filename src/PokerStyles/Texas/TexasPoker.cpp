@@ -7,7 +7,6 @@
 #include "../../CoR/HandHandler.h"
 #include "../../CoR/HandChecker.h"
 #include "../../CoR/HandHandlerHelper.h"
-#include <random>
 #include <algorithm>
 
 TexasPoker::TexasPoker() {
@@ -15,8 +14,7 @@ TexasPoker::TexasPoker() {
 }
 
 void TexasPoker::play(int playersNb) {
-    generateDeck();
-    shuffleDeck();
+    deck.generate();
     createPlayers(playersNb);
     generateCommunityCards();
     flop();
@@ -25,22 +23,6 @@ void TexasPoker::play(int playersNb) {
     calculateHands();
     std::vector<Player> winners = getReallyLuckyPlayers(sortPlayers());
     Console::printEndGameInfo(communityCards, players, winners);
-}
-
-void TexasPoker::generateDeck() {
-    for (int type = CardType::Club; type <= CardType::Diamond; type++) {
-        for (int number = CardNumber::Ace; number <= CardNumber::King; number++) {
-            auto cardNb = static_cast<CardNumber>(number);
-            auto cardType = static_cast<CardType>(type);
-            deck.push_back(Card(cardNb, cardType));
-        }
-    }
-}
-
-void TexasPoker::shuffleDeck() {
-    std::random_device randomDevice;
-    std::default_random_engine randomEngine(randomDevice());
-    std::shuffle(deck.begin(), deck.end(), randomEngine);
 }
 
 void TexasPoker::createPlayers(int nb) {
@@ -62,39 +44,29 @@ std::string TexasPoker::createPlayerName(int i) {
 
 std::vector<Card> TexasPoker::generatePlayerHand() {
     std::vector<Card> cards;
-    cards.push_back(pickCardFromDeck());
-    cards.push_back(pickCardFromDeck());
+    cards.push_back(deck.pick());
+    cards.push_back(deck.pick());
     return cards;
 }
 
 void TexasPoker::generateCommunityCards() {
-    communityCards.push_back(pickCardFromDeck());
-    communityCards.push_back(pickCardFromDeck());
+    communityCards.push_back(deck.pick());
+    communityCards.push_back(deck.pick());
 }
 
 void TexasPoker::flop() {
-    burnCard();
-    communityCards.push_back(pickCardFromDeck());
+    deck.burn();
+    communityCards.push_back(deck.pick());
 }
 
 void TexasPoker::turn() {
-    burnCard();
-    communityCards.push_back(pickCardFromDeck());
+    deck.burn();
+    communityCards.push_back(deck.pick());
 }
 
 void TexasPoker::river() {
-    burnCard();
-    communityCards.push_back(pickCardFromDeck());
-}
-
-Card TexasPoker::pickCardFromDeck() {
-    Card card = deck.front();
-    deck.erase(deck.begin());
-    return card;
-}
-
-void TexasPoker::burnCard() {
-    deck.erase(deck.begin());
+    deck.burn();
+    communityCards.push_back(deck.pick());
 }
 
 void TexasPoker::calculateHands() {

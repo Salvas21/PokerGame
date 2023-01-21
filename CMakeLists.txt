@@ -13,6 +13,8 @@ set(Headers
         src/PokerStyles/PokerStyle.h
         src/PokerStyles/Texas/TexasPoker.h
         src/Models/Card/Card.h
+        src/Models/Deck/Deck.h
+        src/Models/Deck/NormalDeck/NormalDeck.h
         src/Models/Hand/Hand.h
         src/Models/Player/Player.h
         src/Consoles/CardConsole.h
@@ -40,6 +42,8 @@ set(Sources
         src/PokerStyles/PokerStyle.cpp
         src/PokerStyles/Texas/TexasPoker.cpp
         src/Models/Card/Card.cpp
+        src/Models/Deck/Deck.cpp
+        src/Models/Deck/NormalDeck/NormalDeck.cpp
         src/Models/Hand/Hand.cpp
         src/Models/Player/Player.cpp
         src/Consoles/CardConsole.cpp

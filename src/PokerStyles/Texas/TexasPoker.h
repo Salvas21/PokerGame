@@ -8,6 +8,7 @@
 #include "../PokerStyle.h"
 #include "../../Models/Card/Card.h"
 #include "../../Models/Player/Player.h"
+#include "../../Models/Deck/NormalDeck/NormalDeck.h"
 #include <vector>
 
 class TexasPoker : public PokerStyle {
@@ -16,12 +17,10 @@ public:
     void play(int playersNb) override;
 
 private:
-    std::vector<Card> deck;
+    NormalDeck deck = NormalDeck();
     std::vector<Player> players;
     std::vector<Card> communityCards;
 
-    void generateDeck();
-    void shuffleDeck();
     void createPlayers(int nb);
     std::string createPlayerName(int i);
     std::vector<Card> generatePlayerHand();
@@ -29,8 +28,6 @@ private:
     void flop();
     void turn();
     void river();
-    Card pickCardFromDeck();
-    void burnCard();
     void calculateHands();
     std::vector<Player> sortPlayers();
     std::vector<Player> getReallyLuckyPlayers(std::vector<Player> sortedPlayers);
